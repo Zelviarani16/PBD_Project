@@ -40,20 +40,20 @@ Route::middleware('authcheck')->group(function () {
     // ======================
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
     Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
-    Route::post('/barang/store', [BarangController::class, 'store'])->name('barang.store');
+    Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
     Route::get('/barang/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
-    Route::post('/barang/{id}/update', [BarangController::class, 'update'])->name('barang.update');
-    Route::get('/barang/{id}/delete', [BarangController::class, 'destroy'])->name('barang.delete');
+    Route::put('/barang/{id}', [BarangController::class, 'update'])->name('barang.update');   // <-- ubah ini
+    Route::delete('/barang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy'); // <-- ubah ini
 
     // ======================
     // SATUAN
     // ======================
     Route::get('/satuan', [SatuanController::class, 'index'])->name('satuan.index');
     Route::get('/satuan/create', [SatuanController::class, 'create'])->name('satuan.create');
-    Route::post('/satuan/store', [SatuanController::class, 'store'])->name('satuan.store');
+    Route::post('/satuan', [SatuanController::class, 'store'])->name('satuan.store');
     Route::get('/satuan/{id}/edit', [SatuanController::class, 'edit'])->name('satuan.edit');
-    Route::post('/satuan/{id}/update', [SatuanController::class, 'update'])->name('satuan.update');
-    Route::get('/satuan/{id}/delete', [SatuanController::class, 'destroy'])->name('satuan.delete');
+    Route::put('/satuan/{id}', [SatuanController::class, 'update'])->name('satuan.update');
+    Route::delete('/satuan/{id}', [SatuanController::class, 'destroy'])->name('satuan.delete');
 
     // ======================
     // VENDOR

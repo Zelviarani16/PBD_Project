@@ -123,6 +123,12 @@
         updateCount();
     });
 
+    filterStatus.value = 'Aktif';
+    applyFilters();
+
+    filterStatus.addEventListener('change', applyFilters);
+    searchInput.addEventListener('keyup', applyFilters);
+
     updateCount();
 
     function confirmDelete(id, nama) {

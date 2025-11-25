@@ -35,41 +35,53 @@ class SatuanController extends Controller
     {
         // Validasi input
         $request->validate([
-            'idsatuan' => 'required|max:10',
             'nama_satuan' => 'required|max:45',
         ]);
 
-        // Ambil inputan dari form
-        $idsatuan = $request->idsatuan;
+        // AUTO GENERATE IDSATUAN: AB1, AB2, AB3 ...
+        // Ambil ID terakhir
+        $last = DB::select("SELECT idsatuan FROM satuan ORDER BY idsatuan DESC LIMIT 1");
+
+        if (count($last) > 0) {
+            // Ambil angka di belakang AB
+            $lastNumber = (int) substr($last[0]->idsatuan, 2); 
+            $newNumber = $lastNumber + 1;
+        } else {
+            // Jika tabel masih kosong → mulai dari 1
+            $newNumber = 1;
+        }
+
+        // Buat ID baru
+        $idsatuan = "AB" . $newNumber;
+
+        // Ambil input
         $nama_satuan = $request->nama_satuan;
         $status = $request->has('status') ? 1 : 0;
 
-        // Panggil SP untuk tambah satuan
-        DB::statement('CALL sp_tambah_satuan(?, ?, ?)', [
-            $idsatuan,
-            $nama_satuan,
-            $status
-        ]);
+        // INSERT
+        DB::insert("
+            INSERT INTO satuan (idsatuan, nama_satuan, status)
+            VALUES (?, ?, ?)
+        ", [$idsatuan, $nama_satuan, $status]);
 
         return redirect()->route('satuan.index')->with('success', 'Satuan berhasil ditambahkan!');
     }
+
 
     // ========================
     // FORM EDIT SATUAN
     // ========================
     public function edit($id)
     {
-        // Ambil data satuan dari view berdasarkan id
         $satuan = DB::select('SELECT * FROM v_satuan_all WHERE idsatuan = ?', [$id]);
 
-        if (count($satuan) > 0) {
-            $satuan = $satuan[0];
-        } else {
-            abort(404);
-        }
+        if (count($satuan) == 0) abort(404);
+
+        $satuan = $satuan[0];
 
         return view('satuan.edit', compact('satuan'));
     }
+
 
     // ========================
     // UPDATE DATA SATUAN
@@ -84,12 +96,11 @@ class SatuanController extends Controller
         $nama_satuan = $request->nama_satuan;
         $status = $request->has('status') ? 1 : 0;
 
-        // Panggil SP update
-        DB::statement('CALL sp_update_satuan(?, ?, ?)', [
-            $idsatuan,
-            $nama_satuan,
-            $status
-        ]);
+         DB::update('
+            UPDATE satuan
+            SET nama_satuan = ?, status = ?
+            WHERE idsatuan = ?
+        ', [$nama_satuan, $status, $id]);
 
         return redirect()->route('satuan.index')->with('success', 'Satuan berhasil diperbarui!');
     }
@@ -105,14 +116,5 @@ class SatuanController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('satuan.index')->with('error', 'Gagal menghapus satuan. Data mungkin sedang digunakan.');
         }
-    }
-
-    // ========================
-    // JUMLAH SATUAN BERDASARKAN STATUS (FUNCTION)
-    // ========================
-    public function totalSatuanByStatus($status = 'semua')
-    {
-        $total = DB::select('SELECT fn_total_satuan_by_status(?) AS total', [$status]);
-        return response()->json(['total' => $total[0]->total ?? 0]);
     }
 }

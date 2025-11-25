@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCount();
     }
 
-    filterStatus.value = 'Pending';
+    filterStatus.value = 'In Process';
     applyFilters();
 
     filterStatus.addEventListener('change', applyFilters);

@@ -158,6 +158,11 @@
 
         updateCount(); // update count setelah filter
     });
+    filterStatus.value = 'Aktif';
+    applyFilters();
+
+    filterStatus.addEventListener('change', applyFilters);
+    searchInput.addEventListener('keyup', applyFilters);
 
     // Panggil sekali saat load
     updateCount();

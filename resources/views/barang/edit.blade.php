@@ -9,9 +9,9 @@
         <h5>Form Edit Barang</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('barang.update', $barang->idbarang) }}" method="POST">
-            @csrf
-            @method('PUT')
+            <form action="{{ route('barang.update', $barang->idbarang) }}" method="POST">
+                @csrf
+                @method('PUT')
 
             <div class="mb-3">
                 <label for="idbarang">ID Barang</label>
