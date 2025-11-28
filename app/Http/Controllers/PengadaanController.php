@@ -63,10 +63,6 @@ class PengadaanController extends Controller
 
         $details = DB::select('SELECT * FROM v_pengadaan_detail WHERE idpengadaan = ?', [$id]);
 
-        foreach ($details as $d) {
-            $d->sub_total = $d->harga_satuan * $d->jumlah;
-        }
-
         $barangs = DB::select('SELECT * FROM barang ORDER BY nama ASC');
 
         // CEK STATUS: 'P' = bisa edit, selain itu = read only
@@ -75,6 +71,7 @@ class PengadaanController extends Controller
         return view('pengadaan.detail_pengadaan', compact('pengadaan', 'details', 'barangs', 'isEditable'));
     }
 
+    // Cek juga apakah tambah barang masih bisa (harus status p)
     public function tambahDetail(Request $request, $id)
     {
         $request->validate([

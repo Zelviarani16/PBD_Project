@@ -77,7 +77,7 @@
                         <td>{{ $d->nama_barang }}</td>
                         <td>Rp {{ number_format($d->harga_satuan, 0, ',', '.') }}</td>
                         <td>{{ $d->jumlah }}</td>
-                        <td>Rp {{ number_format($d->sub_total, 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($d->subtotal, 0, ',', '.') }}</td>
                     </tr>
                 @empty
                     <tr>
