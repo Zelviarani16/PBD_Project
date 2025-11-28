@@ -64,25 +64,28 @@ class PenjualanController extends Controller
     // DETAIL - lihat header + detail (pakai view v_penjualan_detail)
     public function detail($id)
     {
-        $penjualan = DB::select('SELECT * FROM v_penjualan_all WHERE idpenjualan = ?', [$id]);
-
-        if (!$penjualan || count($penjualan) === 0) {
+        // Ambil dari view
+         $penjualanArr = DB::select('SELECT * FROM v_penjualan_status WHERE idpenjualan = ?', [$id]);
+        if (!$penjualanArr || count($penjualanArr) === 0) {
             return redirect()->route('penjualan.index')->with('error', 'Data penjualan tidak ditemukan.');
         }
 
-        // ambil detail
+        $penjualan = $penjualanArr[0];
+
+        // ambil detail penjualan
         $details = DB::select('SELECT * FROM v_penjualan_detail_lengkap WHERE idpenjualan = ? ORDER BY nama_barang ASC', [$id]);
 
-        // barang dropdown di halaman detail: pakai v_stok_barang_penjualan
-        $barangs_for_dropdown = DB::table('v_barang_stok_terakhir')->orderBy('nama')->get();
+        // ambil barang untuk dropdown
         $barangs = DB::table('v_barang_stok_terakhir')->orderBy('nama')->get();
 
-        return view('penjualan.detail', [
-            'penjualan' => $penjualan[0],
-            'details' => $details,
-            'barangs' => $barangs
-        ]);
+        // isEditable = belum final
+        $isEditable = !$penjualan->is_final;
+
+        return view('penjualan.detail', compact('penjualan', 'details', 'barangs', 'isEditable'));
     }
+
+
+
 
     // ADD DETAIL - panggil sp_tambah_detail_penjualan
     public function addDetail(Request $request, $id)
@@ -129,5 +132,19 @@ class PenjualanController extends Controller
         ]);
 
         return redirect()->route('penjualan.index')->with('success', 'Transaksi dibatalkan dan stok dikembalikan.');
+    }
+    public function finalize($id)
+    {
+        try {
+            DB::table('penjualan_status')->updateOrInsert(
+                ['idpenjualan' => $id],
+                ['is_final' => 1]
+            );
+
+            return redirect()->route('penjualan.detail', $id)
+                ->with('success', 'Penjualan berhasil disimpan dan difinalisasi.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal finalisasi: ' . $e->getMessage());
+        }
     }
 }

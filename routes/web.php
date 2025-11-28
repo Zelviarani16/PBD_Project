@@ -62,8 +62,8 @@ Route::middleware('authcheck')->group(function () {
     Route::get('/vendor/create', [VendorController::class, 'create'])->name('vendor.create');
     Route::post('/vendor/store', [VendorController::class, 'store'])->name('vendor.store');
     Route::get('/vendor/{id}/edit', [VendorController::class, 'edit'])->name('vendor.edit');
-    Route::post('/vendor/{id}/update', [VendorController::class, 'update'])->name('vendor.update');
-    Route::get('/vendor/{id}/delete', [VendorController::class, 'destroy'])->name('vendor.delete');
+    Route::put('/vendor/{id}', [VendorController::class, 'update'])->name('vendor.update');
+    Route::delete('/vendor/{id}', [VendorController::class, 'destroy'])->name('vendor.destroy');
 
     // ======================
     // ROLE
@@ -73,7 +73,7 @@ Route::middleware('authcheck')->group(function () {
     Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
     Route::get('/role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
     Route::post('/role/{id}/update', [RoleController::class, 'update'])->name('role.update');
-    Route::get('/role/{id}/delete', [RoleController::class, 'destroy'])->name('role.delete');
+    Route::delete('/role/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
 
     // ======================
     // USER
@@ -82,8 +82,8 @@ Route::middleware('authcheck')->group(function () {
     Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
-    Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
-    Route::get('/user/{id}/delete', [UserController::class, 'destroy'])->name('user.delete');
+    Route::put('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
     // ======================
     // MARGIN PENJUALAN
@@ -130,8 +130,9 @@ Route::middleware('authcheck')->group(function () {
     Route::get('/penerimaan/create', [PenerimaanController::class, 'create'])->name('penerimaan.create');
     Route::post('/penerimaan/store', [PenerimaanController::class, 'store'])->name('penerimaan.store');
     Route::get('/penerimaan/{id}/detail', [PenerimaanController::class, 'detail'])->name('penerimaan.detail');
-    Route::post('/penerimaan/{id}/tambah-detail', [PenerimaanController::class, 'tambahDetail'])->name('penerimaan.tambahDetail');
+    Route::post('/penerimaan/{id}/tambahDetail', [PenerimaanController::class, 'tambahDetail'])->name('penerimaan.tambahDetail');
     Route::get('/penerimaan/{id}/delete', [PenerimaanController::class, 'destroy'])->name('penerimaan.delete');
+    Route::post('penerimaan/{id}/finalize', [PenerimaanController::class, 'finalize'])->name('penerimaan.finalize');
 
     // ======================
     // PENJUALAN
@@ -144,4 +145,6 @@ Route::middleware('authcheck')->group(function () {
     Route::post('/penjualan/detail/update', [PenjualanController::class, 'updateDetail'])->name('penjualan.detail.update');
     Route::post('/penjualan/detail/delete', [PenjualanController::class, 'deleteDetail'])->name('penjualan.detail.delete');
     Route::post('/penjualan/cancel', [PenjualanController::class, 'cancel'])->name('penjualan.cancel');
+    Route::post('penjualan/{id}/finalize', [PenjualanController::class, 'finalize'])->name('penjualan.finalize');
+
 });

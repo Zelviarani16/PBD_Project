@@ -21,8 +21,8 @@ class UserController extends Controller
     public function create()
     {
         // Ambil semua role dari tabel role (atau bisa view kalau kamu punya)
-        $roles = DB::select('SELECT * FROM role ORDER BY nama_role ASC');
-        return view('user.create', compact('roles'));
+        $role = DB::select('SELECT * FROM role ORDER BY nama_role ASC');
+        return view('user.create', compact('role'));
     }
 
     // SIMPAN USER BARU
@@ -51,14 +51,19 @@ class UserController extends Controller
     // FORM EDIT USER
     public function edit($id)
     {
-        $user = DB::select('SELECT * FROM v_user WHERE iduser = ?', [$id]);
-        if (count($user) == 0) abort(404);
-        $user = $user[0];
+        $user = DB::table('user')
+            ->join('role', 'user.idrole', '=', 'role.idrole')
+            ->select('user.*', 'role.nama_role', 'role.idrole')
+            ->where('user.iduser', $id)
+            ->first(); // langsung object
 
-        $roles = DB::select('SELECT * FROM role ORDER BY nama_role ASC');
+        if (!$user) abort(404);
 
-        return view('user.edit', compact('user', 'roles'));
+        $role = DB::table('role')->orderBy('nama_role', 'asc')->get();
+
+        return view('user.edit', compact('user', 'role'));
     }
+
 
     // UPDATE USER
     public function update(Request $request, $id)
@@ -96,4 +101,5 @@ class UserController extends Controller
             return redirect()->route('user.index')->with('error', 'Gagal menghapus user. Data mungkin sedang digunakan.');
         }
     }
+
 }

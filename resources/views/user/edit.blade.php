@@ -11,8 +11,7 @@
     <div class="card-body">
         <form action="{{ route('user.update', $user->iduser) }}" method="POST">
             @csrf
-            @method('PUT')
-
+            
             <div class="mb-3">
                 <label for="iduser" class="form-label">ID User</label>
                 <input type="text" class="form-control" id="iduser" name="iduser" value="{{ $user->iduser }}" readonly>
@@ -29,8 +28,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="idrole" class="form-label">Role</label>
-                <select name="idrole" id="idrole" class="form-select" required>
+                <label for="role" class="form-label">Role</label>
+                <select name="idrole" id="role" class="form-control" required>
                     @foreach($role as $r)
                         <option value="{{ $r->idrole }}" {{ $r->idrole == $user->idrole ? 'selected' : '' }}>
                             {{ $r->nama_role }}

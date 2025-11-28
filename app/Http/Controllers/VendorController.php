@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,33 +33,25 @@ class VendorController extends Controller
     // =============================
     public function store(Request $request)
     {
-        // Validasi input dari form
+        // Validasi input
         $request->validate([
             'idvendor' => 'required|max:10',
             'nama_vendor' => 'required|max:100',
-            'alamat' => 'required|max:255',
-            'telepon' => 'required|max:15',
+            'badan_hukum' => 'required|in:P,C',
+            'status' => 'nullable',
         ]);
 
-        // Ambil data dari form input
-        $idvendor = $request->idvendor;
-        $nama_vendor = $request->nama_vendor;
-        $alamat = $request->alamat;
-        $telepon = $request->telepon;
-        $status = $request->has('status') ? 1 : 0;
-
-        // Panggil Stored Procedure untuk menambah vendor
-        DB::statement('CALL sp_tambah_vendor(?, ?, ?, ?, ?)', [
-            $idvendor,
-            $nama_vendor,
-            $alamat,
-            $telepon,
-            $status
+        // Insert langsung ke DB
+        DB::table('vendor')->insert([
+            'idvendor' => $request->idvendor,
+            'nama_vendor' => $request->nama_vendor,
+            'badan_hukum' => $request->badan_hukum,
+            'status' => $request->has('status') ? '1' : '0', // char(1)
         ]);
 
-        // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('vendor.index')->with('success', 'Vendor berhasil ditambahkan!');
     }
+
 
     // =============================
     //  FORM EDIT VENDOR
@@ -78,31 +71,20 @@ class VendorController extends Controller
     }
 
     // =============================
-    //  UPDATE DATA (PAKAI SP)
+    //  UPDATE DATA 
     // =============================
     public function update(Request $request, $id)
     {
-        // Validasi form
         $request->validate([
             'nama_vendor' => 'required|max:100',
-            'alamat' => 'required|max:255',
-            'telepon' => 'required|max:15',
+            'badan_hukum' => 'required|in:P,C',
+            'status' => 'nullable',
         ]);
 
-        // Ambil data dari form
-        $idvendor = $id;
-        $nama_vendor = $request->nama_vendor;
-        $alamat = $request->alamat;
-        $telepon = $request->telepon;
-        $status = $request->has('status') ? 1 : 0;
-
-        // Panggil Stored Procedure update vendor
-        DB::statement('CALL sp_update_vendor(?, ?, ?, ?, ?)', [
-            $idvendor,
-            $nama_vendor,
-            $alamat,
-            $telepon,
-            $status
+        DB::table('vendor')->where('idvendor', $id)->update([
+            'nama_vendor' => $request->nama_vendor,
+            'badan_hukum' => $request->badan_hukum,
+            'status' => $request->has('status') ? '1' : '0',
         ]);
 
         return redirect()->route('vendor.index')->with('success', 'Vendor berhasil diperbarui!');
@@ -113,15 +95,13 @@ class VendorController extends Controller
     // =============================
     public function destroy($id)
     {
-        try {
-            // Jalankan SP hapus vendor
-            DB::statement('CALL sp_hapus_vendor(?)', [$id]);
+        $vendor = Vendor::findOrFail($id);
+        $vendor->delete();
 
-            return redirect()->route('vendor.index')->with('success', 'Vendor berhasil dihapus!');
-        } catch (\Exception $e) {
-            return redirect()->route('vendor.index')->with('error', 'Gagal menghapus vendor. Data mungkin sedang digunakan.');
-        }
+        return redirect()->route('vendor.index')->with('success', 'Vendor berhasil dihapus');
     }
+
+
 
     // =============================
     //  FUNCTION: JUMLAH VENDOR BERDASARKAN STATUS

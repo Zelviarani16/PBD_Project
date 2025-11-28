@@ -42,7 +42,7 @@
                         <th>Tanggal</th>
                         <th>Vendor</th>
                         <th style="width: 120px;">Subtotal</th>
-                        <th style="width: 80px;">PPN</th>
+                        <th style="width: 80px;">PPN (10%)</th>
                         <th style="width: 120px;">Total Nilai</th>
                         <th style="width: 100px;">Status</th>
                         <th>User</th>
@@ -57,7 +57,7 @@
                         <td>{{ $item->tanggal_pengadaan }}</td>
                         <td>{{ $item->nama_vendor }}</td>
                         <td>Rp {{ number_format($item->subtotal_nilai, 0, ',', '.') }}</td>
-                        <td>{{ $item->ppn }}%</td>
+                        <td>Rp {{ number_format($item->ppn_rupiah, 0, ',', '.') }}</td>
                         <td>Rp {{ number_format($item->total_nilai, 0, ',', '.') }}</td>
                         <td>
                             @if($item->status_text == 'Selesai')

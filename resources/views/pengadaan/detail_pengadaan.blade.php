@@ -45,8 +45,8 @@
                 <td>Rp {{ number_format($pengadaan->subtotal_nilai, 0, ',', '.') }}</td>
             </tr>
             <tr>
-                <th>PPN</th>
-                <td>{{ $pengadaan->ppn }}%</td>
+                <th>PPN (10%)</th>
+                <td>{{ number_format($pengadaan->ppn_rupiah, 0, ',', '.') }}</td>
             </tr>
             <tr>
                 <th>Total Nilai</th>

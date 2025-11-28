@@ -26,7 +26,6 @@
             <div class="mb-3">
                 <label for="user_iduser" class="form-label">User Pembuat</label>
                 <input type="text" class="form-control" value="{{ $currentUser['username'] }}" readonly>
-                <input type="hidden" name="user_iduser" value="{{ $currentUser['iduser'] }}">
             </div>
 
             <a href="{{ route('penerimaan.index') }}" class="btn btn-secondary">Batal</a>

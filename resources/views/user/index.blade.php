@@ -119,11 +119,13 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 let form = document.getElementById('deleteForm');
-                form.action = `/user/${id}`;
+                // Gunakan route helper supaya aman jika prefix berubah
+                form.action = "{{ url('user') }}/" + id;
                 form.submit();
             }
         });
     }
+
 </script>
 @endpush
 @endsection

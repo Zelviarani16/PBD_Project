@@ -70,7 +70,7 @@ class PengadaanController extends Controller
         $barangs = DB::select('SELECT * FROM barang ORDER BY nama ASC');
 
         // CEK STATUS: 'P' = bisa edit, selain itu = read only
-        $isEditable = ($pengadaan->status_code === 'P');
+        $isEditable = ($pengadaan->status_text === 'Pending');
 
         return view('pengadaan.detail_pengadaan', compact('pengadaan', 'details', 'barangs', 'isEditable'));
     }

@@ -61,9 +61,15 @@
                                 <a href="{{ route('vendor.edit', $v->idvendor) }}" class="btn btn-outline-warning" title="Edit">
                                     <i class='bx bx-edit'></i>
                                 </a>
-                                <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('{{ $v->idvendor }}', '{{ $v->nama_vendor }}')" title="Hapus">
-                                    <i class='bx bx-trash'></i>
-                                </button>
+                                <form action="{{ route('vendor.destroy', $v->idvendor) }}" method="POST" onsubmit="return confirm('Yakin hapus {{ $v->nama_vendor }}?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </form>
+
+
                             </div>
                         </td>
                     </tr>
