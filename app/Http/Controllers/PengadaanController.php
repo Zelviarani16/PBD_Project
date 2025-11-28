@@ -15,7 +15,7 @@ class PengadaanController extends Controller
 
     public function create()
     {
-        $vendors = DB::select('SELECT * FROM vendor');
+        $vendors = DB::select('SELECT * FROM v_vendor_aktif');
 
         // Ambil user dari session login
         $currentUser = [

@@ -21,7 +21,7 @@ class UserController extends Controller
     public function create()
     {
         // Ambil semua role dari tabel role (atau bisa view kalau kamu punya)
-        $role = DB::select('SELECT * FROM role ORDER BY nama_role ASC');
+        $role = DB::select('SELECT * FROM v_role ORDER BY nama_role ASC');
         return view('user.create', compact('role'));
     }
 

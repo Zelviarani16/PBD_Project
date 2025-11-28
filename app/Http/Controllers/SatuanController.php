@@ -108,11 +108,11 @@ class SatuanController extends Controller
     // ========================
     // HAPUS DATA SATUAN
     // ========================
-    public function destroy($id)
+        public function destroy($id)
     {
         try {
-            DB::statement('CALL sp_hapus_satuan(?)', [$id]);
-            return redirect()->route('satuan.index')->with('success', 'Satuan berhasil dihapus!');
+            DB::delete('DELETE FROM satuan WHERE idsatuan = ?', [$id]);
+            return redirect()->route('satuan.index')->with('success, Satuan berhasil dihapus!');
         } catch (\Exception $e) {
             return redirect()->route('satuan.index')->with('error', 'Gagal menghapus satuan. Data mungkin sedang digunakan.');
         }

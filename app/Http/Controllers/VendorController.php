@@ -29,7 +29,7 @@ class VendorController extends Controller
     }
 
     // =============================
-    //  SIMPAN DATA BARU (PAKAI SP)
+    //  SIMPAN DATA BARU 
     // =============================
     public function store(Request $request)
     {
@@ -91,7 +91,7 @@ class VendorController extends Controller
     }
 
     // =============================
-    //  HAPUS DATA (PAKAI SP)
+    //  HAPUS DATA 
     // =============================
     public function destroy($id)
     {
