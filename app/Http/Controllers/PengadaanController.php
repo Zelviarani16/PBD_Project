@@ -40,7 +40,7 @@ class PengadaanController extends Controller
             $request->vendor_idvendor
         ]);
 
-        // Ambil ID pengadaan terbaru berdasarkan kombinasi unik
+        // Ambil ID pengadaan terbaru
         $idpengadaan = DB::table('pengadaan')
             ->where('user_iduser', $user_iduser)
             ->where('vendor_idvendor', $request->vendor_idvendor)

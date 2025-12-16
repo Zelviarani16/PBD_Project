@@ -11,7 +11,8 @@
     <div class="card-body">
         <form action="{{ route('user.update', $user->iduser) }}" method="POST">
             @csrf
-            
+            @method('PUT')
+
             <div class="mb-3">
                 <label for="iduser" class="form-label">ID User</label>
                 <input type="text" class="form-control" id="iduser" name="iduser" value="{{ $user->iduser }}" readonly>

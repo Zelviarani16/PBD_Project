@@ -43,7 +43,7 @@ class MarginPenjualanController extends Controller
             $idmargin_penjualan, $persen, $username, $status
         ]);
 
-        return redirect()->route('margin_penjualan.index')->with('success', 'Data margin penjualan berhasil ditambahkan!');
+        return redirect()->route('margin.index')->with('success', 'Data margin penjualan berhasil ditambahkan!');
     }
 
     // HAPUS DATA
@@ -51,9 +51,9 @@ class MarginPenjualanController extends Controller
     {
         try {
             DB::statement('DELETE FROM margin_penjualan WHERE idmargin_penjualan = ?', [$id]);
-            return redirect()->route('margin_penjualan.index')->with('success', 'Data margin penjualan berhasil dihapus!');
+            return redirect()->route('margin.index')->with('success', 'Data margin penjualan berhasil dihapus!');
         } catch (\Exception $e) {
-            return redirect()->route('margin_penjualan.index')->with('error', 'Gagal menghapus data. Mungkin sedang digunakan.');
+            return redirect()->route('margin.index')->with('error', 'Gagal menghapus data. Mungkin sedang digunakan.');
         }
     }
 
@@ -67,7 +67,7 @@ class MarginPenjualanController extends Controller
     ", [$id]);
 
     if (!$margin) {
-        return redirect()->route('margin_penjualan.index')
+        return redirect()->route('margin.index')
             ->with('error', 'Data tidak ditemukan.');
     }
 
@@ -104,7 +104,7 @@ public function update(Request $request, $id)
         $id
     ]);
 
-    return redirect()->route('margin_penjualan.index')
+    return redirect()->route('margin.index')
         ->with('success', 'Data margin penjualan berhasil diperbarui!');
 }
 

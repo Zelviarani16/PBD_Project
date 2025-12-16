@@ -19,6 +19,8 @@ class PenerimaanController extends Controller
     {
         // Gunakan COLLATE agar tidak error mix collations
         $pengadaans = DB::table('v_pengadaan_all')
+            ->whereIn('status_text', ['Pending', 'In Process', 'Sebagian'])
+            ->orderBy('tanggal_pengadaan', 'DESC')
             ->whereRaw("status_text COLLATE utf8mb4_unicode_ci IN (?, ?, ?)", ['Pending', 'In Process', 'Sebagian'])
             ->get();
 
@@ -113,7 +115,7 @@ class PenerimaanController extends Controller
             // Buat read-only setelah klik simpan
             session()->flash('readonly', true);
 
-            // Ambil penerimaan terbaru (optional, bisa digunakan untuk view)
+            // Ambil penerimaan terbaru (bs digunaka =n utk view)
             $penerimaan = DB::table('v_penerimaan_all')->where('idpenerimaan', $idpenerimaan)->first();
 
             return redirect()->route('penerimaan.detail', $idpenerimaan);

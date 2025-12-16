@@ -40,7 +40,8 @@
                         <th>Tanggal</th>
                         <th>Kasir</th>
                         <th style="width:120px;">Subtotal</th>
-                        <th style="width:80px;">Margin</th>
+                        <th style="width:80px;">Margin (%) </th>
+                        <th style="width:80px;">Margin Nilai</th>
                         <th style="width:80px;">PPN</th>
                         <th style="width:140px;">Total</th>
                         <th style="width:120px;">Aksi</th>
@@ -55,7 +56,8 @@
                         <td>{{ $p->kasir }}</td>
                         <td>Rp {{ number_format($p->subtotal_nilai, 0, ',', '.') }}</td>
                         <td>{{ $p->margin_persen }}%</td>
-                        <td>{{ $p->ppn }}%</td>
+                        <td>Rp {{ number_format($p->subtotal_nilai * ($p->margin_persen / 100), 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($p->subtotal_nilai * ($p->ppn / 100), 0, ',', '.') }}</td>
                         <td>Rp {{ number_format($p->total_nilai, 0, ',', '.') }}</td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group">

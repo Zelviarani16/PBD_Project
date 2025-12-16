@@ -18,7 +18,7 @@
             <tr><th>Kasir</th><td>{{ $penjualan->kasir }}</td></tr>
             <tr><th>Subtotal</th><td>Rp {{ number_format($penjualan->subtotal_nilai ?? 0, 0, ',', '.') }}</td></tr>
             <tr><th>Margin</th><td>{{ $penjualan->margin_persen ?? 0 }}%</td></tr>
-            <tr><th>PPN</th><td>{{ $penjualan->ppn ?? 10 }}%</td></tr>
+            <tr><th>PPN</th><td>Rp {{ number_format($penjualan->subtotal_nilai * ($penjualan->ppn / 100), 0, ',', '.') }}</td></tr>
             <tr><th>Total</th><td>Rp {{ number_format($penjualan->total_nilai ?? 0, 0, ',', '.') }}</td></tr>
         </table>
     </div>

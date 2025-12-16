@@ -9,7 +9,7 @@
         <h5>Form Tambah Margin Penjualan</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('margin_penjualan.store') }}" method="POST">
+        <form action="{{ route('margin.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="idmargin_penjualan" class="form-label">ID Margin Penjualan</label>
@@ -36,7 +36,7 @@
                 </label>
             </div>
 
-            <a href="{{ route('margin_penjualan.index') }}" class="btn btn-secondary">Batal</a>
+            <a href="{{ route('margin.index') }}" class="btn btn-secondary">Batal</a>
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
     </div>

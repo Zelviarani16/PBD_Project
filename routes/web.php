@@ -93,7 +93,7 @@ Route::middleware('authcheck')->group(function () {
     Route::get('/margin/create', [MarginPenjualanController::class, 'create'])->name('margin.create');
     Route::post('/margin/store', [MarginPenjualanController::class, 'store'])->name('margin.store');
     Route::get('/margin/{id}/edit', [MarginPenjualanController::class, 'edit'])->name('margin.edit');
-    Route::post('/margin/{id}/update', [MarginPenjualanController::class, 'update'])->name('margin.update');
+    Route::put('/margin/{id}/update', [MarginPenjualanController::class, 'update'])->name('margin.update');
     Route::get('/margin/{id}/delete', [MarginPenjualanController::class, 'destroy'])->name('margin.delete');
 
     // ======================

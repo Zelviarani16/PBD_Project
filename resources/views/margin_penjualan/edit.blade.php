@@ -9,14 +9,14 @@
         <h3>Edit Margin Penjualan</h3>
         <p>Ubah data margin penjualan sesuai kebutuhan.</p>
     </div>
-    <a href="{{ route('margin_penjualan.index') }}" class="btn btn-secondary">
+    <a href="{{ route('margin.index') }}" class="btn btn-secondary">
         <i class='bx bx-arrow-back'></i> Kembali
     </a>
 </div>
 
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('margin_penjualan.update', $margin->idmargin_penjualan) }}" method="POST">
+        <form action="{{ route('margin.update', $margin->idmargin_penjualan) }}" method="POST">
             @csrf
             @method('PUT')
 
